@@ -1,0 +1,1 @@
+An digitally-analogue clock drawn into a canvas using javascript. Embed this in your code to diplay time with style!
