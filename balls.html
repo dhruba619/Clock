@@ -16,9 +16,9 @@ function init(){
      function draw(){
          c.fillStyle = 'black';
          c.strokeStyle = 'black';
-         // c.fillRect(container.x,container.y,container.width,container.height);
+         c.fillRect(container.x,container.y,container.width,container.height);
          //c.clearRect(container.x,container.y,container.width,container.height);
-         c.strokeRect(container.x,container.y,container.width,container.height);
+         // c.strokeRect(container.x,container.y,container.width,container.height);
 
          for(var i=0; i <hands.length; i++){
              c.fillStyle = 'hsl(' + hands[i].color + ',100%,50%)';
