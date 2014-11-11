@@ -16,7 +16,7 @@ function displayclock(){
    	var canvas = document.querySelector('#clock');
    	var context = canvas.getContext('2d');
 
-   	var clockRadius = 100;
+   	var clockRadius = canvas.width/2 -30;
 
    	var clockX = canvas.width /2;
    	var clockY = canvas.width /2;
@@ -43,53 +43,60 @@ function displayclock(){
 	// 	context.stroke();
 	// }
 
-   	function drawArm(progress,armThickness, armLength, armColor){
+   	function drawArm(progress,armThickness, armLength, armColor, daylight,val){
    		var armRadians  =(tau * progress) - (tau/4);
    		// var armLenght = armLenght;
-
    		var targetX = clockX + Math.cos(armRadians) * (armLength * clockRadius);  
    		var targetY = clockY + Math.sin(armRadians) * (armLength * clockRadius);
-   		// console.log(targetX + " " + targetY);
-   		var grd = context.createLinearGradient(0,0,170,0);
-   		context.beginPath()
-		context.arc(clockX,clockY,clockRadius-5, 0, Math.PI*2,true);
-		grd.addColorStop(0,"#DD0000");
-		grd.addColorStop(0.5,"#00DD00");
-		grd.addColorStop(1,"#0000DD");
-		context.strokeWidth = 3;
-		context.strokeStyle = grd;
-		context.stroke();
-
-
-   		var grd = context.createLinearGradient(0,0,170,0);
-   		context.beginPath()
-		context.arc(clockX,clockY,clockRadius-10, 0, Math.PI*2,true);
-		grd.addColorStop(0,"#7744ee");
-		grd.addColorStop(0.5,"#DD5555");
-		grd.addColorStop(1,"#77ee55");
-		context.strokeStyle = grd;
-		context.strokeFill = "#000000"
-		context.stroke();
-
+		
+		//background
 		context.beginPath()
-		context.arc(clockX,clockY,3, 0, Math.PI*2,true);
-		context.fillStyle ="#000000";
-		context.stroke();
+		context.arc(clockX,clockY,clockRadius+12, 0, Math.PI*2,true);
+		if(daylight)
+		{
+			context.fillStyle = 'rgba(255,200,040,0.1)';
+      		context.fill();
+		}
+		else
+		{
+			context.fillStyle = 'rgba(044,044,044,0.1)';
+      		context.fill();
+		}
+   		armRadius = armThickness; 
+   		context.arc(targetX,targetY,armRadius, 0, Math.PI*2,true);
+   		// context.fillStyle = armColor;
+   		context.fill();
 
-   		context.lineWidth = armThickness;
-   		context.strokeStyle = armColor;
-
-   		context.beginPath();
-   		context.moveTo(clockX, clockY);
+   		//time hands
+   		context.beginPath()
+   		context.moveTo(clockX,clockY);
    		context.lineTo(targetX, targetY);
+   		context.strokeStyle = "white";
+   		context.lineWidth = 2;
    		context.stroke();
 
+   		//hand circle
+   		context.beginPath()
+		context.arc(targetX,targetY,armThickness, 0, Math.PI*2,true);
+		context.fillStyle =armColor;
+		context.fill();
+
+   		//center circle
+   		context.beginPath()
+		context.arc(clockX,clockY,3, 0, Math.PI*2,true);
+		context.fillStyle ="#000000";
+		context.fill();
 
 		}
 		context.clearRect(0, 0, canvas.width, canvas.height);
-   		drawArm(h/12,6,0.5,'#0000DD');
-   		drawArm(m/60,4,0.80,'#00DD00');
-   		drawArm(s/60,2,1,'#DD0000');
+		var daylight = 1;
+		if(h>18 || h<5)
+		{
+			daylight = 0;
+		}
+   		drawArm(h/12,8,0.5,'#0000DD',daylight,h%12);
+   		drawArm(m/60,5,0.80,'#FFFFFF',daylight,m%60);
+   		drawArm(s/60,4,1,'#DD0000',daylight,padZero(s%60));
 }
  function padZero(sec){
     	if(sec<10)
