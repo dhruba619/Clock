@@ -1,12 +1,27 @@
 <html>
 <head>
 	<title>Clock</title>
-	<script src="jquery.js"></script>
-	<script src="clock.js"></script>
+	<script type="text/javascript">
+		window.onload = function displayclock(){
+		var clockCanvas = document.getElementById("clock");
+		var context = clockCanvas.getContext('2d');
+		Time = new Date();
+		Time.hour = Time.getHours();
+		Time.minute = Time.getMinutes();
+		Time.seconds = Time.getSeconds();
+
+		var grd = context.createLinearGradient(0,0,200,200);
+		grd.addColorStop(0,'#ffee77');
+		grd.addColorStop(1,"#ffee77");
+
+		var height = clockCanvas.height;
+			width = clockCanvas.width;
+		alert(height + " " + width);
+		// context.arc()
+		}
+	</script>
 </head>
 <body>
-	<div style="height:100px; width:100px;">
-		<canvas id="clock" width:'100' height:'100'></canvas>
-	</div>
+<canvas id="clock" width:'1000' height:'1000' style="border:#000 1px solid;"></canvas
 </body>
 </html>

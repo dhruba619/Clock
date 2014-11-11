@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <script type="text/javascript">
+      (function(){
+
+function init(){
+     var canvas = document.getElementsByTagName('canvas')[0];
+     var c = canvas.getContext('2d');
+
+     var container = {x:100,y:100,width:1200,height:800};
+     var hands = [{x:400,y:400,r:50,color:25,vx:6,vy:10},
+     ];
+
+
+     function draw(){
+         c.fillStyle = 'black';
+         c.strokeStyle = 'black';
+         // c.fillRect(container.x,container.y,container.width,container.height);
+         //c.clearRect(container.x,container.y,container.width,container.height);
+         c.strokeRect(container.x,container.y,container.width,container.height);
+
+         for(var i=0; i <hands.length; i++){
+             c.fillStyle = 'hsl(' + hands[i].color + ',100%,50%)';
+             c.beginPath();
+             c.arc(hands[i].x,hands[i].y,hands[i].r,0,2*Math.PI,false);
+             c.fill();
+
+             if((hands[i].x + hands[i].vx + hands[i].r > container.x + container.width) || (hands[i].x - hands[i].r + hands[i].vx < container.x)){
+                hands[i].vx = - hands[i].vx;
+             }
+             if((hands[i].y + hands[i].vy + hands[i].r > container.y + container.height) || (hands[i].y - hands[i].r + hands[i].vy < container.y)){
+                 hands[i].vy = - hands[i].vy;
+             }
+             hands[i].x +=hands[i].vx;
+             hands[i].y +=hands[i].vy;
+         }
+
+
+
+         requestAnimationFrame(draw);
+
+     }
+
+
+    requestAnimationFrame(draw);
+
+
+}
+
+//invoke function init once document is fully loaded
+window.addEventListener('load',init,false);
+
+}());
+    </script>
+  </head>
+  <body>
+    <canvas id="myCanvas" width="1200" height="800"></canvas>
+  </body>
+</html> 
