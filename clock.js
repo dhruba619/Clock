@@ -94,7 +94,7 @@ function displayclock(){
 		{
 			daylight = 0;
 		}
-   		drawArm(h/12,8,0.5,'#0000DD',daylight,h%12);
+   		drawArm(((h+(m/60))/12),8,0.5,'#0000DD',daylight,h%12);
    		drawArm(m/60,5,0.80,'#FFFFFF',daylight,m%60);
    		drawArm(s/60,4,1,'#DD0000',daylight,padZero(s%60));
 }
